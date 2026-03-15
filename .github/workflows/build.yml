@@ -11,12 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -24,16 +22,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Dependency Vulnerability Scan
+      - name: Run dependency audit
         run: npm audit --audit-level=moderate
 
-      - name: SonarCloud SAST Scan
+      - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v2
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
 
-      - name: OWASP ZAP DAST Scan
+      - name: OWASP ZAP Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: "https://example.com"
