@@ -1,0 +1,9 @@
+name: Simple Workflow
+
+on: push
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Workflow successful"
